@@ -1,0 +1,625 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html {
+        height: 100%;
+      }
+
+      body {
+        height: 100%;
+        min-height: 100vh;
+        background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "DM Sans", sans-serif;
+        padding: 1.5rem 1rem;
+        position: relative;
+        overflow-x: hidden;
+        overflow-y: auto;
+      }
+
+      .orb {
+        position: fixed;
+        border-radius: 50%;
+        filter: blur(80px);
+        opacity: 0.35;
+        animation: drift 8s ease-in-out infinite alternate;
+        pointer-events: none;
+        z-index: 0;
+      }
+      .orb-1 {
+        width: 400px;
+        height: 400px;
+        background: #7c3aed;
+        top: -100px;
+        left: -100px;
+      }
+      .orb-2 {
+        width: 350px;
+        height: 350px;
+        background: #06b6d4;
+        bottom: -80px;
+        right: -80px;
+        animation-delay: 2s;
+      }
+      .orb-3 {
+        width: 250px;
+        height: 250px;
+        background: #ec4899;
+        bottom: 20%;
+        left: 10%;
+        animation-delay: 4s;
+      }
+
+      @keyframes drift {
+        from {
+          transform: translate(0, 0) scale(1);
+        }
+        to {
+          transform: translate(30px, -30px) scale(1.08);
+        }
+      }
+
+      .card {
+        position: relative;
+        width: 100%;
+        max-width: 400px;
+        background: rgba(255, 255, 255, 0.07);
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 28px;
+        padding: 2rem 1.75rem 1.75rem;
+        box-shadow:
+          0 25px 60px rgba(0, 0, 0, 0.4),
+          inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        animation: floatIn 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        opacity: 0;
+        transform: translateY(24px);
+        z-index: 1;
+        margin: auto;
+      }
+
+      @keyframes floatIn {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .card-shimmer {
+        position: absolute;
+        inset: 0;
+        border-radius: 28px;
+        background: linear-gradient(
+          105deg,
+          rgba(255, 255, 255, 0.08) 0%,
+          transparent 50%
+        );
+        pointer-events: none;
+      }
+
+      .profile-section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.75rem;
+        margin-bottom: 1.25rem;
+      }
+
+      .avatar-wrap {
+        position: relative;
+        width: 90px;
+        height: 90px;
+      }
+
+      .avatar-ring {
+        position: absolute;
+        inset: -4px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #7c3aed, #06b6d4, #ec4899);
+        animation: spin 6s linear infinite;
+        opacity: 0.8;
+      }
+
+      @keyframes spin {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      .avatar {
+        position: relative;
+        width: 90px;
+        height: 90px;
+        border-radius: 50%;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        overflow: hidden;
+        z-index: 1;
+      }
+
+      .avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+
+      .status-dot {
+        position: absolute;
+        bottom: 5px;
+        right: 5px;
+        width: 13px;
+        height: 13px;
+        background: #22c55e;
+        border-radius: 50%;
+        border: 2px solid rgba(15, 12, 41, 0.8);
+        z-index: 2;
+        animation: pulse-dot 2s ease-in-out infinite;
+      }
+
+      @keyframes pulse-dot {
+        0%,
+        100% {
+          box-shadow: 0 0 8px rgba(34, 197, 94, 0.6);
+        }
+        50% {
+          box-shadow: 0 0 16px rgba(34, 197, 94, 0.9);
+        }
+      }
+
+      .name {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1.85rem;
+        font-weight: 600;
+        color: #fff;
+        letter-spacing: 0.01em;
+        text-align: center;
+        line-height: 1.1;
+      }
+
+      .title {
+        font-size: 0.75rem;
+        font-weight: 300;
+        color: rgba(255, 255, 255, 0.55);
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        text-align: center;
+        margin-top: 2px;
+      }
+
+      .divider {
+        width: 40px;
+        height: 1px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.3),
+          transparent
+        );
+        margin: 0 auto 1rem;
+      }
+
+      .info-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 0.5rem 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        color: rgba(255, 255, 255, 0.75);
+        font-size: 0.85rem;
+        font-weight: 300;
+      }
+
+      .info-row:last-of-type {
+        border-bottom: none;
+      }
+
+      .info-icon {
+        width: 30px;
+        height: 30px;
+        border-radius: 9px;
+        background: rgba(255, 255, 255, 0.08);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+
+      .info-icon svg {
+        width: 14px;
+        height: 14px;
+        opacity: 0.7;
+      }
+
+      .socials {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin: 1.25rem 0 1.1rem;
+        flex-wrap: wrap;
+      }
+
+      .social-btn {
+        width: 44px;
+        height: 44px;
+        border-radius: 14px;
+        background: rgba(255, 255, 255, 0.07);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+        text-decoration: none;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .social-btn::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: 14px;
+        opacity: 0;
+        transition: opacity 0.25s;
+      }
+
+      .social-btn.li::before {
+        background: linear-gradient(135deg, #0077b5, #00a0dc);
+      }
+      .social-btn.fb::before {
+        background: linear-gradient(135deg, #1877f2, #0d5fd4);
+      }
+      .social-btn.wa::before {
+        background: linear-gradient(135deg, #25d366, #128c4a);
+      }
+      .social-btn.wp::before {
+        background: linear-gradient(135deg, #21759b, #0073aa);
+      }
+
+      .social-btn:hover::before {
+        opacity: 1;
+      }
+      .social-btn:hover {
+        transform: translateY(-4px) scale(1.08);
+        border-color: rgba(255, 255, 255, 0.25);
+        box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
+      }
+
+      .social-btn svg {
+        width: 18px;
+        height: 18px;
+        fill: rgba(255, 255, 255, 0.7);
+        position: relative;
+        z-index: 1;
+        transition: fill 0.2s;
+      }
+
+      .social-btn:hover svg {
+        fill: #fff;
+      }
+
+      .social-label {
+        font-size: 0.6rem;
+        color: rgba(255, 255, 255, 0.4);
+        text-align: center;
+        margin-top: 4px;
+        letter-spacing: 0.05em;
+      }
+
+      .social-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .cta-btn {
+        width: 100%;
+        padding: 0.8rem 1.5rem;
+        border-radius: 14px;
+        background: linear-gradient(
+          135deg,
+          rgba(124, 58, 237, 0.6),
+          rgba(6, 182, 212, 0.5)
+        );
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: #fff;
+        font-family: "DM Sans", sans-serif;
+        font-size: 0.875rem;
+        font-weight: 500;
+        letter-spacing: 0.03em;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+        position: relative;
+        overflow: hidden;
+        backdrop-filter: blur(8px);
+      }
+
+      .cta-btn::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          135deg,
+          rgba(124, 58, 237, 0.8),
+          rgba(6, 182, 212, 0.7)
+        );
+        opacity: 0;
+        transition: opacity 0.25s;
+      }
+
+      .cta-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 30px rgba(124, 58, 237, 0.4);
+      }
+      .cta-btn:hover::after {
+        opacity: 1;
+      }
+      .cta-btn:active {
+        transform: scale(0.98);
+      }
+      .cta-btn span,
+      .cta-btn svg {
+        position: relative;
+        z-index: 1;
+      }
+      .cta-btn svg {
+        width: 16px;
+        height: 16px;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 2;
+        stroke-linecap: round;
+      }
+
+      .toast {
+        position: fixed;
+        bottom: 1.5rem;
+        left: 50%;
+        transform: translateX(-50%) translateY(20px);
+        background: rgba(34, 197, 94, 0.15);
+        backdrop-filter: blur(16px);
+        border: 1px solid rgba(34, 197, 94, 0.4);
+        color: #86efac;
+        padding: 0.65rem 1.25rem;
+        border-radius: 50px;
+        font-size: 0.85rem;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        opacity: 0;
+        transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+        pointer-events: none;
+        white-space: nowrap;
+        z-index: 99;
+      }
+
+      .toast.show {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+      }
+      .toast svg {
+        width: 16px;
+        height: 16px;
+        stroke: #86efac;
+        fill: none;
+        stroke-width: 2.5;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+
+    <div class="card">
+      <div class="card-shimmer"></div>
+
+      <div class="profile-section">
+        <div class="avatar-wrap">
+          <div class="avatar-ring"></div>
+          <div class="avatar">
+            <img src="my-pic.png" alt="Muhammad Rashid" />
+            <div class="status-dot"></div>
+          </div>
+        </div>
+        <div>
+          <div class="name">Muhammad Rashid</div>
+          <div class="title">Aspiring WordPress Developer</div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="info-row">
+        <div class="info-icon">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="rgba(255,255,255,0.8)"
+            stroke-width="1.8"
+            stroke-linecap="round"
+          >
+            <rect x="2" y="4" width="20" height="16" rx="3" />
+            <polyline points="2,4 12,13 22,4" />
+          </svg>
+        </div>
+        <span>mrashidpak@gmail.com</span>
+      </div>
+
+      <div class="info-row">
+        <div class="info-icon">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="rgba(255,255,255,0.8)"
+            stroke-width="1.8"
+            stroke-linecap="round"
+          >
+            <path
+              d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8a19.79 19.79 0 01-3.07-8.63A2 2 0 012 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14v2.92z"
+            />
+          </svg>
+        </div>
+        <span>+92-301-8776872</span>
+      </div>
+
+      <div class="info-row">
+        <div class="info-icon">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="rgba(255,255,255,0.8)"
+            stroke-width="1.8"
+            stroke-linecap="round"
+          >
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
+            <circle cx="12" cy="10" r="3" />
+          </svg>
+        </div>
+        <span>Bahawalpur, Punjab, Pakistan</span>
+      </div>
+
+      <div class="socials">
+        <div class="social-item">
+          <a
+            class="social-btn li"
+            title="LinkedIn"
+            href="https://www.linkedin.com/in/muhammad-rashid-02633a1b4/"
+            target="_blank"
+          >
+            <svg viewBox="0 0 24 24">
+              <path
+                d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"
+              />
+              <circle cx="4" cy="4" r="2" />
+            </svg>
+          </a>
+          <span class="social-label">LinkedIn</span>
+        </div>
+
+        <div class="social-item">
+          <a
+            class="social-btn fb"
+            title="Facebook"
+            href="https://www.facebook.com/muhammad.rashid.549"
+            target="_blank"
+          >
+            <svg viewBox="0 0 24 24">
+              <path
+                d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"
+              />
+            </svg>
+          </a>
+          <span class="social-label">Facebook</span>
+        </div>
+
+        <div class="social-item">
+          <a
+            class="social-btn wa"
+            title="WhatsApp"
+            href="https://wa.me/923018776872"
+            target="_blank"
+          >
+            <svg viewBox="0 0 24 24">
+              <path
+                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"
+              />
+              <path
+                d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.532 5.86L.057 23.428a.75.75 0 00.916.916l5.569-1.474A11.953 11.953 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.75a9.726 9.726 0 01-4.964-1.364l-.356-.212-3.685.975.986-3.592-.232-.37A9.725 9.725 0 012.25 12C2.25 6.615 6.615 2.25 12 2.25S21.75 6.615 21.75 12 17.385 21.75 12 21.75z"
+              />
+            </svg>
+          </a>
+          <span class="social-label">WhatsApp</span>
+        </div>
+
+        <div class="social-item">
+          <a
+            class="social-btn wp"
+            title="WordPress"
+            href="http://rashidwpdev.infinityfreeapp.com/?i=1"
+            target="_blank"
+          >
+            <svg viewBox="0 0 24 24">
+              <path
+                d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zM3.814 12c0-.974.185-1.903.516-2.762l2.842 7.789A8.196 8.196 0 013.814 12zm8.186 8.186a8.196 8.196 0 01-2.347-.344l2.491-7.239 2.552 6.993c.017.041.036.079.058.115a8.2 8.2 0 01-2.754.475zm1.14-10.853c.498-.026.946-.079.946-.079.446-.053.394-.709-.053-.683 0 0-1.337.105-2.2.105-.811 0-2.175-.105-2.175-.105-.447-.026-.5.656-.053.683 0 0 .42.053.866.079l1.287 3.526-1.808 5.422-3.008-8.948c.498-.026.946-.079.946-.079.446-.053.394-.709-.053-.683 0 0-1.337.105-2.2.105-.155 0-.337-.004-.53-.01A8.19 8.19 0 0112 3.814c2.162 0 4.139.787 5.627 2.079-.036-.002-.071-.006-.108-.006-.811 0-1.386.709-1.386 1.47 0 .683.394 1.26.814 1.943.316.552.684 1.261.684 2.285 0 .71-.273 1.533-.63 2.678l-.826 2.759-2.995-8.689zm4.999 9.355l2.534-7.326c.473-1.182.63-2.127.63-2.967 0-.305-.02-.588-.056-.855A8.186 8.186 0 0120.186 12a8.19 8.19 0 01-2.047 5.688z"
+              />
+            </svg>
+          </a>
+          <span class="social-label">WordPress</span>
+        </div>
+      </div>
+
+      <button class="cta-btn" id="copyBtn" onclick="copyEmail()">
+        <svg viewBox="0 0 24 24">
+          <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+          <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"></path>
+        </svg>
+        <span id="btnText">Copy Email Address</span>
+      </button>
+    </div>
+
+    <div class="toast" id="toast">
+      <svg viewBox="0 0 24 24">
+        <polyline points="20 6 9 17 4 12"></polyline>
+      </svg>
+      Copied to clipboard!
+    </div>
+
+    <script>
+      function copyEmail() {
+        const email = "mrashidpak@gmail.com";
+        navigator.clipboard.writeText(email).catch(() => {
+          const ta = document.createElement("textarea");
+          ta.value = email;
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand("copy");
+          document.body.removeChild(ta);
+        });
+
+        const text = document.getElementById("btnText");
+        const toast = document.getElementById("toast");
+        const btn = document.getElementById("copyBtn");
+
+        text.textContent = "Copied!";
+        btn.style.background =
+          "linear-gradient(135deg, rgba(34,197,94,0.5), rgba(16,185,129,0.4))";
+        toast.classList.add("show");
+
+        setTimeout(() => {
+          toast.classList.remove("show");
+          text.textContent = "Copy Email Address";
+          btn.style.background = "";
+        }, 2500);
+      }
+    </script>
+  </body>
+</html>
